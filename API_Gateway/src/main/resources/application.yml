@@ -1,0 +1,33 @@
+server:
+  port: 8081
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+  
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: Citizen-Service
+        uri: lb://Citizen-Service
+       
+        predicates:
+        - Path=/v5/**
+        
+        
+      - id: VaCCINATION-SERVICE
+        uri: lb://VaCCINATION-SERVICE
+          
+        predicates:
+        - Path=/v9/**
+        
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+  application:
+    name: API-GATEWAY
